@@ -1,6 +1,7 @@
 const initState = {
   squares: [null, null, null, null, null, null, null, null, null],
   clickAllowed: true,
+  status: 'Make a Move',
 };
 
 const gameReducer = (state = initState, action) => {
@@ -16,6 +17,7 @@ const gameReducer = (state = initState, action) => {
         ...state,
         squares: [null, null, null, null, null, null, null, null, null],
         clickAllowed: true,
+        status: 'Make a Move',
       };
     case 'ALLOW_CLICK':
       return {
@@ -26,6 +28,21 @@ const gameReducer = (state = initState, action) => {
       return {
         ...state,
         clickAllowed: false,
+      };
+    case 'ALG_WINNER':
+      return {
+        ...state,
+        status: 'The Algorithm Won',
+      };
+    case 'HUMAN_WINNED':
+      return {
+        ...state,
+        status: 'The Human Won',
+      };
+    case 'NO_WINNER':
+      return {
+        ...state,
+        status: 'Equal intelligence',
       };
     default:
       return { ...state };

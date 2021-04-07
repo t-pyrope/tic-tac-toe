@@ -1,30 +1,33 @@
-import React, { useState } from 'react';
+/* eslint-disable no-console */
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Square from './Square';
 import { calculateWinner, computersTurnHandler } from './handlers';
 import { addAlgWinner, addHumanWinner, addTie } from '../actions/roundAction';
-import { playerStep, prohibitClick, allowClick } from '../actions/gameAction';
+import {
+  playerStep, prohibitClick, allowClick, algWinner, humanWinner, noWinner,
+} from '../actions/gameAction';
 
 const Board = () => {
-  const [status, setStatus] = useState('\u00A0');
   const dispatch = useDispatch();
 
-  const { squares, clickAllowed } = useSelector((state) => state.game);
+  const { squares, clickAllowed, status } = useSelector((state) => state.game);
 
   const statusHandler = (sq) => {
     const winner = calculateWinner(sq);
     if (winner === 'X') {
-      setStatus('A human won');
+      dispatch(humanWinner());
       dispatch(addHumanWinner());
     }
     if (winner === 'O') {
-      setStatus('An algorithm won');
+      dispatch(algWinner());
       dispatch(addAlgWinner());
     }
     if (!winner) {
-      setStatus('Equal intelligence');
+      dispatch(noWinner());
       dispatch(addTie());
     }
+    console.log(status);
   };
 
   const handleClick = (i) => {

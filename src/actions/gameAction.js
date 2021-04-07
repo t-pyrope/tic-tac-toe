@@ -16,3 +16,15 @@ export const prohibitClick = () => ({
 export const allowClick = () => ({
   type: 'ALLOW_CLICK',
 });
+
+export const algWinner = () => ({
+  type: 'ALG_WINNER',
+});
+
+export const humanWinner = () => ({
+  type: 'HUMAN_WINNER',
+});
+
+export const noWinner = () => ({
+  type: 'NO_WINNER',
+});

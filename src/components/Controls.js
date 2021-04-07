@@ -6,7 +6,7 @@ const Controls = () => {
   const dispatch = useDispatch();
   return (
     <div>
-      <button type="submit" onClick={() => dispatch(resetGame())}>
+      <button className="play" type="submit" onClick={() => dispatch(resetGame())}>
         Play again
       </button>
     </div>
