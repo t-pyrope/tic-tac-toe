@@ -25,27 +25,27 @@ export const computersTurnHandler = (sq1) => {
     const [a, b, c] = lines[i];
     if (sq[a] === 'O' && sq[b] === 'O' && sq[c] === null) {
       sq[c] = 'O';
-      return sq;
+      return c;
     }
     if (sq[a] === 'O' && sq[c] === 'O' && sq[b] === null) {
       sq[b] = 'O';
-      return sq;
+      return b;
     }
     if (sq[b] === 'O' && sq[c] === 'O' && sq[a] === null) {
       sq[a] = 'O';
-      return sq;
+      return a;
     }
     if (sq[a] === 'X' && sq[b] === 'X' && sq[c] === null) {
       sq[c] = 'O';
-      return sq;
+      return c;
     }
     if (sq[a] === 'X' && sq[c] === 'X' && sq[b] === null) {
       sq[b] = 'O';
-      return sq;
+      return b;
     }
     if (sq[b] === 'X' && sq[c] === 'X' && sq[a] === null) {
       sq[a] = 'O';
-      return sq;
+      return a;
     }
   }
   let random;
@@ -53,9 +53,9 @@ export const computersTurnHandler = (sq1) => {
     random = Math.floor(Math.random() * sq.length);
     if (!sq[random]) {
       sq[random] = 'O';
-      return sq;
+      return random;
     }
     random = null;
   }
-  return sq;
+  return null;
 };

@@ -1,46 +1,53 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Square from './Square';
 import { calculateWinner, computersTurnHandler } from './handlers';
+import { addAlgWinner, addHumanWinner, addTie } from '../actions/roundAction';
+import { playerStep, prohibitClick, allowClick } from '../actions/gameAction';
 
 const Board = () => {
-  const [allowClick, setAllowClick] = useState(true);
-  const [squares, setSquares] = useState(Array(9).fill(null));
   const [status, setStatus] = useState('\u00A0');
+  const dispatch = useDispatch();
+
+  const { squares, clickAllowed } = useSelector((state) => state.game);
 
   const statusHandler = (sq) => {
     const winner = calculateWinner(sq);
     if (winner === 'X') {
       setStatus('A human won');
+      dispatch(addHumanWinner());
     }
     if (winner === 'O') {
       setStatus('An algorithm won');
+      dispatch(addAlgWinner());
     }
     if (!winner) {
       setStatus('Equal intelligence');
+      dispatch(addTie());
     }
   };
 
   const handleClick = (i) => {
-    if (!allowClick || squares[i]) {
+    if (!clickAllowed || squares[i]) {
       return;
     }
-    let squares2 = squares.slice();
-    setAllowClick(false);
+    const squares2 = squares.slice();
+    dispatch(prohibitClick());
+    dispatch(playerStep(i, 'X'));
     squares2[i] = 'X';
 
     if (calculateWinner(squares2) || !squares2.includes(null)) {
-      setSquares(squares2);
       statusHandler(squares2);
       return;
     }
-    squares2 = computersTurnHandler(squares2);
+
+    const compI = computersTurnHandler(squares2);
+    dispatch(playerStep(compI, 'O'));
     if (calculateWinner(squares2) || !squares2.includes(null)) {
-      setSquares(squares2);
       statusHandler(squares2);
       return;
     }
-    setSquares(squares2);
-    setAllowClick(true);
+    dispatch(allowClick());
   };
 
   const renderSquare = (i) => (
