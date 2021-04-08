@@ -34,7 +34,7 @@ const gameReducer = (state = initState, action) => {
         ...state,
         status: 'The Algorithm Won',
       };
-    case 'HUMAN_WINNED':
+    case 'HUMAN_WINNER':
       return {
         ...state,
         status: 'The Human Won',

@@ -19,32 +19,26 @@ export const calculateWinner = (squares) => {
   return null;
 };
 
-export const computersTurnHandler = (sq1) => {
+export const computersTurnHandler = (sq1, humLet, compLet) => {
   const sq = [...sq1];
   for (let i = 0; i < lines.length; i += 1) {
     const [a, b, c] = lines[i];
-    if (sq[a] === 'O' && sq[b] === 'O' && sq[c] === null) {
-      sq[c] = 'O';
+    if (sq[a] === compLet && sq[b] === compLet && sq[c] === null) {
       return c;
     }
-    if (sq[a] === 'O' && sq[c] === 'O' && sq[b] === null) {
-      sq[b] = 'O';
+    if (sq[a] === compLet && sq[c] === compLet && sq[b] === null) {
       return b;
     }
-    if (sq[b] === 'O' && sq[c] === 'O' && sq[a] === null) {
-      sq[a] = 'O';
+    if (sq[b] === compLet && sq[c] === compLet && sq[a] === null) {
       return a;
     }
-    if (sq[a] === 'X' && sq[b] === 'X' && sq[c] === null) {
-      sq[c] = 'O';
+    if (sq[a] === humLet && sq[b] === humLet && sq[c] === null) {
       return c;
     }
-    if (sq[a] === 'X' && sq[c] === 'X' && sq[b] === null) {
-      sq[b] = 'O';
+    if (sq[a] === humLet && sq[c] === humLet && sq[b] === null) {
       return b;
     }
-    if (sq[b] === 'X' && sq[c] === 'X' && sq[a] === null) {
-      sq[a] = 'O';
+    if (sq[b] === humLet && sq[c] === humLet && sq[a] === null) {
       return a;
     }
   }
@@ -52,7 +46,7 @@ export const computersTurnHandler = (sq1) => {
   while (!sq[random]) {
     random = Math.floor(Math.random() * sq.length);
     if (!sq[random]) {
-      sq[random] = 'O';
+      sq[random] = compLet;
       return random;
     }
     random = null;

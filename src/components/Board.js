@@ -1,9 +1,10 @@
-/* eslint-disable no-console */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Square from './Square';
 import { calculateWinner, computersTurnHandler } from './handlers';
-import { addAlgWinner, addHumanWinner, addTie } from '../actions/roundAction';
+import {
+  addAlgWinner, addHumanWinner, addTie,
+} from '../actions/roundAction';
 import {
   playerStep, prohibitClick, allowClick, algWinner, humanWinner, noWinner,
 } from '../actions/gameAction';
@@ -12,14 +13,15 @@ const Board = () => {
   const dispatch = useDispatch();
 
   const { squares, clickAllowed, status } = useSelector((state) => state.game);
+  const { rounds } = useSelector((state) => state.round);
 
-  const statusHandler = (sq) => {
+  const statusHandler = (sq, humLet, compLet) => {
     const winner = calculateWinner(sq);
-    if (winner === 'X') {
+    if (winner === humLet) {
       dispatch(humanWinner());
       dispatch(addHumanWinner());
     }
-    if (winner === 'O') {
+    if (winner === compLet) {
       dispatch(algWinner());
       dispatch(addAlgWinner());
     }
@@ -27,29 +29,50 @@ const Board = () => {
       dispatch(noWinner());
       dispatch(addTie());
     }
-    console.log(status);
   };
+
+  const computersStep = (sq, humLet, compLet) => {
+    const sq2 = [...sq];
+    const compI = computersTurnHandler(sq2, humLet, compLet);
+    sq2[compI] = compLet;
+    dispatch(playerStep(compI, compLet));
+    if (calculateWinner(sq2) || !sq2.includes(null)) {
+      statusHandler(sq2, humLet, compLet);
+    }
+  };
+
+  useEffect(() => {
+    if (rounds % 2 === 1) {
+      computersStep(squares, 'O', 'X');
+    }
+  }, [rounds]);
 
   const handleClick = (i) => {
     if (!clickAllowed || squares[i]) {
       return;
     }
+
     const squares2 = squares.slice();
     dispatch(prohibitClick());
-    dispatch(playerStep(i, 'X'));
-    squares2[i] = 'X';
+    let humLet;
+    let compLet;
+    if (rounds % 2 === 1) {
+      compLet = 'X';
+      humLet = 'O';
+    } else {
+      compLet = 'O';
+      humLet = 'X';
+    }
+
+    dispatch(playerStep(i, humLet));
+    squares2[i] = humLet;
 
     if (calculateWinner(squares2) || !squares2.includes(null)) {
-      statusHandler(squares2);
+      statusHandler(squares2, humLet, compLet);
       return;
     }
 
-    const compI = computersTurnHandler(squares2);
-    dispatch(playerStep(compI, 'O'));
-    if (calculateWinner(squares2) || !squares2.includes(null)) {
-      statusHandler(squares2);
-      return;
-    }
+    computersStep(squares2, humLet, compLet);
     dispatch(allowClick());
   };
 

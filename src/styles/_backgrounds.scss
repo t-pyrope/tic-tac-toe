@@ -2,7 +2,7 @@
 %container {
   width: 88%;
   height: 95%;
-  opacity: 0.4;
+  opacity: 0.3;
   margin: auto;
   display: flex;
   align-items: center;
@@ -50,6 +50,7 @@
 .bg-image-blue {
   @extend %container;
   background-color:#273c75;
+  opacity: 0.6;
 }
 
 .bg-image-green {
@@ -57,4 +58,5 @@
   background-color:#6ab04c;
   flex-direction: column;
   justify-content: center;
+  opacity: 0.9;
 }
