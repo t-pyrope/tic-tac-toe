@@ -1,3 +1,8 @@
+// variables
+$red-box: #ff3f34;
+$blue-box: #273c75;
+$green-box: #6ab04c;
+
 // Extends
 %container {
   width: 88%;
@@ -22,15 +27,12 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-image: url('../img/hacker.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+  background-color: $text-color;
 }
   
 .bg-image-red {
   @extend %container;
-  background-color: #ff3f34;
+  background-color: $red-box;
   height: 94vh;
   width: 60%;
   position: absolute;
@@ -49,13 +51,13 @@
   
 .bg-image-blue {
   @extend %container;
-  background-color:#273c75;
+  background-color: $blue-box;
   opacity: 0.6;
 }
 
 .bg-image-green {
   @extend %container;
-  background-color:#6ab04c;
+  background-color: $green-box;
   flex-direction: column;
   justify-content: center;
   opacity: 0.9;

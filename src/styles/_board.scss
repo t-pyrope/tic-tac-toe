@@ -1,3 +1,8 @@
+// variables
+$square-background: #fff;
+$square-border: #999;
+$text-color: rgb(53, 53, 53);
+
 .board-row {
     display: flex;
   }
@@ -8,8 +13,8 @@
   }
   
   .square {
-    background: #fff;
-    border: 1px solid #999;
+    background: $square-background;
+    border: 1px solid $square-border;
     font-size: 2.5rem;
     height: 3rem;
     margin-right: -1px;
@@ -17,5 +22,5 @@
     padding: 0;
     text-align: center;
     width: 3rem;
-    color: rgb(53, 53, 53); 
+    color: $text-color; 
   }

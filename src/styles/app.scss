@@ -24,49 +24,6 @@ button {
   cursor: pointer;
 }
 
-.App {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-image: url('../img/hacker.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.bg-image-red {
-  @extend %container;
-  background-color: #ff3f34;
-  height: 94vh;
-  width: 60%;
-  position: absolute;
-  top: 3vh;
-  left: 20%;
-
-  @media (max-width: 950px){
-    width: 80%;
-    left: 10%;
-  }
-
-  @media (max-width: 700px){
-    display: none;
-  }
-}
-
-.bg-image-blue {
-  @extend %container;
-  background-color:#273c75;
-}
-
-.bg-image-green {
-  @extend %container;
-  background-color:#6ab04c;
-  flex-direction: column;
-  justify-content: center;
-}
-
 @import './board';
 @import './game';
 @import './backgrounds';
